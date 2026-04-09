@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string authenticate(string $socketId, string $channel)
  * @method static array  authenticatePresence(string $socketId, string $channel, array $channelData)
  *
- * @see \AmarWave\AmarWave
+ * @see \AmarWave\Laravel\AmarWaveClient
  */
 class AmarWave extends Facade
 {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AmarWave\Laravel;
 
-use AmarWave\AmarWave;
 use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,19 +26,19 @@ class AmarWaveServiceProvider extends ServiceProvider
             'amarwave'
         );
 
-        $this->app->singleton(AmarWave::class, function ($app) {
+        $this->app->singleton(AmarWaveClient::class, function ($app) {
             /** @var array $cfg */
             $cfg = $app['config']->get('amarwave', []);
 
-            return new AmarWave(
-                appKey:    (string) ($cfg['app_key']  ?? ''),
+            return new AmarWaveClient(
+                appKey:    (string) ($cfg['app_key']    ?? ''),
                 appSecret: (string) ($cfg['app_secret'] ?? ''),
-                cluster:   (string) ($cfg['cluster']  ?? 'default'),
-                timeout:   (int)    ($cfg['timeout']  ?? 10),
+                cluster:   (string) ($cfg['cluster']    ?? 'default'),
+                timeout:   (int)    ($cfg['timeout']    ?? 10),
             );
         });
 
-        $this->app->alias(AmarWave::class, 'amarwave');
+        $this->app->alias(AmarWaveClient::class, 'amarwave');
     }
 
     /**
@@ -55,7 +54,7 @@ class AmarWaveServiceProvider extends ServiceProvider
 
         $this->app->resolving(BroadcastManager::class, function (BroadcastManager $manager) {
             $manager->extend('amarwave', function ($app) {
-                return new AmarWaveBroadcaster($app->make(AmarWave::class));
+                return new AmarWaveBroadcaster($app->make(AmarWaveClient::class));
             });
         });
     }
@@ -65,6 +64,6 @@ class AmarWaveServiceProvider extends ServiceProvider
      */
     public function provides(): array
     {
-        return [AmarWave::class, 'amarwave'];
+        return [AmarWaveClient::class, 'amarwave'];
     }
 }

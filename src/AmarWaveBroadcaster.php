@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace AmarWave\Laravel;
 
-use AmarWave\AmarWave;
-use AmarWave\AmarWaveException;
 use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Broadcasting\Broadcasters\Broadcaster;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -26,7 +24,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class AmarWaveBroadcaster extends Broadcaster
 {
-    public function __construct(private readonly AmarWave $amarwave) {}
+    public function __construct(private readonly AmarWaveClient $client) {}
 
     // -------------------------------------------------------------------------
     // Broadcaster contract
@@ -53,10 +51,10 @@ class AmarWaveBroadcaster extends Broadcaster
                 'user_info' => is_array($channelAuth) ? $channelAuth : [],
             ];
 
-            return $this->amarwave->authenticatePresence($socketId, $channelName, $channelData);
+            return $this->client->authenticatePresence($socketId, $channelName, $channelData);
         }
 
-        return ['auth' => $this->amarwave->authenticate($socketId, $channelName)];
+        return ['auth' => $this->client->authenticate($socketId, $channelName)];
     }
 
     /**
@@ -84,7 +82,7 @@ class AmarWaveBroadcaster extends Broadcaster
             $name = (string) $channel;
 
             try {
-                $this->amarwave->trigger($name, $event, $payload);
+                $this->client->trigger($name, $event, $payload);
             } catch (AmarWaveException $e) {
                 throw new BroadcastException(
                     "AmarWave broadcast failed on channel '{$name}': {$e->getMessage()}"
