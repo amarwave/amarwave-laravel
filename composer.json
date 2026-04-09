@@ -30,7 +30,7 @@
         "AmarWave\\Laravel\\AmarWaveServiceProvider"
       ],
       "aliases": {
-        "AmarWave": "AmarWave\\Laravel\\AmarWaveFacade"
+        "AmarWave": "AmarWave\\Laravel\\AmarWave"
       }
     }
   },

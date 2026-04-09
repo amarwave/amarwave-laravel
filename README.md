@@ -47,7 +47,7 @@ AMARWAVE_TIMEOUT=10
 ### Facade
 
 ```php
-use AmarWave\Laravel\AmarWaveFacade as AmarWave;
+use AmarWave\Laravel\AmarWave;
 
 AmarWave::trigger('orders', 'placed', ['order_id' => 42]);
 

@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Facade;
  *
  * Auto-registered via composer.json "extra.laravel.aliases".
  * Manual registration: add to config/app.php aliases:
- *   'AmarWave' => AmarWave\Laravel\AmarWaveFacade::class
+ *   'AmarWave' => AmarWave\Laravel\AmarWave::class
  *
  * Usage:
- *   use AmarWave\Laravel\AmarWaveFacade as AmarWave;
+ *   use AmarWave\Laravel\AmarWave;
  *
  *   AmarWave::trigger('my-channel', 'my-event', ['key' => 'value']);
  *   AmarWave::triggerBatch([...]);
@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see \AmarWave\AmarWave
  */
-class AmarWaveFacade extends Facade
+class AmarWave extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
